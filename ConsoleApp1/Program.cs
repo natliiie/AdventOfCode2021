@@ -9,10 +9,11 @@ internal class Program
 
     internal static void Main()
     {
-        var bla = new Class1();
-
-        bla.three_two();
-
+        var one = new Day1To3();
+        var two = new Day4();
+       
+        two.four_one();
+        
     }
 
     
