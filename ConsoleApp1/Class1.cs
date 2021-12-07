@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-
-namespace Kalender;
+﻿namespace Kalender;
 
 internal class Class1
 {
@@ -115,7 +111,7 @@ internal class Class1
 
     public void three_one()
     {
-        var path = @"C:\Users\natal\source\repos\Kalender\Day4.txt";
+        var path = @"C:\Users\natal\source\repos\Kalender\Day3.txt";
 
         var bitStringList = File.ReadAllLines(path);
 
@@ -134,7 +130,6 @@ internal class Class1
                 var numberarray = bitstring.Select(n => n - '0').ToArray();
                 if (numberarray[i] == 0) zerocount++;
                 if (numberarray[i] == 1) onecount++;
-
             }
 
             //addera till g eller e.
@@ -143,7 +138,6 @@ internal class Class1
                 epsilion = epsilion.Insert(epsilion.Length, "0");
                 gamma = gamma.Insert(gamma.Length, "1");
             }
-
 
             if (zerocount < onecount)
             {
@@ -159,5 +153,97 @@ internal class Class1
         //gångra e med g
         var powerconsumption = epsilonDecimalvalue * gammaDecimalvalue;
         Console.WriteLine(powerconsumption);
+    }
+
+
+
+
+
+    public void three_two()
+    {
+        var path = @"C:\Users\natal\source\repos\Kalender\Day3.txt";
+
+        var oxygen = getSingleBitValue(path, 1);
+        var co2 = getSingleBitValue(path, 0);
+
+        var oxygenDecimal = Convert.ToInt32(oxygen, 2);
+        var co2decimal = Convert.ToInt32(co2, 2);
+
+        var liftSupportRating = oxygenDecimal * co2decimal;
+
+        Console.WriteLine(liftSupportRating);
+
+    }
+
+    public string getSingleBitValue(string path, int valueNumber)
+    {
+        var bitStringList = File.ReadAllLines(path).ToList();
+        var bitLength = bitStringList[0].Length;
+
+        //gå igenom listan  för varje bit(12 st)
+        for (var i = 0; i < bitLength; i++)
+        {
+            var zerocount = 0;
+            var onecount = 0;
+
+            if (bitStringList.Count == 1) break;
+
+            var newList = new List<string>();
+
+            //kolla varje index i strängen
+            foreach (var bitstring in bitStringList)
+            {
+                var numberarray = bitstring.Select(n => n - '0').ToArray();
+                if (numberarray[i] == 0) zerocount++;
+                if (numberarray[i] == 1) onecount++;
+            }
+
+            //oxygen behåll högsta
+            if (valueNumber == 1)
+            {
+                //alla nollor behålls
+                if (zerocount > onecount)
+                    foreach (var bitstring in bitStringList)
+                    {
+                        var numberarray = bitstring.Select(n => n - '0').ToArray();
+                        if (numberarray[i] == 0) newList.Add(bitstring);
+                    }
+
+                //alla ettor behålls
+                if (onecount >= zerocount)
+                    foreach (var bitstring in bitStringList)
+                    {
+                        var numberarray = bitstring.Select(n => n - '0').ToArray();
+                        if (numberarray[i] == 1) newList.Add(bitstring);
+                    }
+            }
+
+            //co2
+            if (valueNumber == 0)
+            {
+                //alla nollor behålls
+                if (zerocount > onecount)
+                    foreach (var bitstring in bitStringList)
+                    {
+                        var numberarray = bitstring.Select(n => n - '0').ToArray();
+                        if (numberarray[i] == 1) newList.Add(bitstring);
+                    }
+
+                //alla ettor behålls
+                if (onecount >= zerocount)
+                    foreach (var bitstring in bitStringList)
+                    {
+                        var numberarray = bitstring.Select(n => n - '0').ToArray();
+                        if (numberarray[i] == 0) newList.Add(bitstring);
+                    }
+            }
+
+            //ny lista varje nästa indexloop
+            bitStringList = newList;
+
+        }
+
+        return bitStringList[0];
+        
     }
 }

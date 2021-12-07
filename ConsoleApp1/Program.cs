@@ -11,7 +11,7 @@ internal class Program
     {
         var bla = new Class1();
 
-        bla.three_one();
+        bla.three_two();
 
     }
 
