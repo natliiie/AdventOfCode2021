@@ -11,8 +11,11 @@ internal class Program
     {
         var one = new Day1To3();
         var two = new Day4();
+        var h = new Class2();
+        var j = new Day4();
        
-        two.four_one();
+        //two.four_one();
+        j.twofour_one();
         
     }
 

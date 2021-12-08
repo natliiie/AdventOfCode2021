@@ -1,64 +1,80 @@
 ﻿namespace Kalender;
 
-internal class Day4
+public class Number
 {
-    public void four_one()
+    public int num { get; set; }
+    public bool isdrawed { get; set; }
+}
+
+public class Row
+{
+    public Row()
+    {
+        numbers = new List<Number>();
+    }
+
+    public List<Number> numbers { get; set; }
+}
+
+public class Board
+{
+    public Board()
+    {
+        rows = new List<Row>();
+    }
+
+    public List<Row> rows { get; set; }
+}
+
+public class Day4
+{
+    public void twofour_one()
     {
         //separera alla nummer till stränglista
         var numberPath = @"C:\Users\natal\source\repos\Kalender\Day4num.txt";
         var numInput = File.ReadAllLines(numberPath);
         var splitstring = numInput[0].Split(",");
 
-
         var boardPath = @"C:\Users\natal\source\repos\Kalender\Day4board.txt";
         var boardInput = File.ReadAllLines(boardPath);
 
-
-        //hela listan ska innehålla alla bingospel
-        var bigcol = new List<List<List<object>>>();
-
-        var singleboard = new List<List<object>>();
-
-
-        var counter = 0;
-
+        var myrow = new Row();
+        var myboard = new Board();
+        var myboardList = new List<Board>(); //egen lista
+        
+        //skapa nummerobjektet
         for (var i = 0; i < boardInput.Length; i++)
-            //varje bingospel har fem rader
-
             if (boardInput[i] != "")
             {
-                if (counter < 5)
-                {
-                    var singleString = boardInput[i].Split(" ");
+                var rowsStrings = boardInput[i].Split(" ");
 
-                    var singlenumberAndBoolList = new List<object>();
-
-                    foreach (var num in singleString)
-                        if (num != "")
+                foreach (var num in rowsStrings)
+                    if (num != "")
+                    {
+                        if (myrow.numbers.Count < 5)
                         {
-                            var singleAndBool = new object[] {num, false};
-                            singlenumberAndBoolList.Add(singleAndBool);
+                            var newnumber = new Number {num = int.Parse(num), isdrawed = false};
+                            myrow.numbers.Add(newnumber); //lägger till ett nummer i nummersamlingen
                         }
 
+                        if (myrow.numbers.Count == 5)
+                        {
+                            myboard.rows.Add(myrow);
+                            myrow = new Row();
+                        }
 
-                    singleboard.Add(singlenumberAndBoolList);
-                    counter++;
-                }
-
-                if (counter == 5)
-                {
-                    //lägg till varje bingospel
-                    bigcol.Add(singleboard);
-                    counter = 0;
-                    singleboard = new List<List<object>>();
-                }
+                        if (myboard.rows.Count == 5)
+                        {
+                            myboardList.Add(myboard);
+                            myboard = new Board();
+                        }
+                    }
             }
 
-        /////////////////////
 
-        //följande tanke, kan va helt galet.
-        //loopa varje nummer och hitta numret i samlingen sätt bool till true. 
-        // kolla om alla är true/false... bingo?
+        /////////////////////
+        ///
+        /// dragningen.
 
 
         Console.WriteLine("klar");
