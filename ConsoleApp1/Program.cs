@@ -13,10 +13,10 @@ internal class Program
         var two = new Day4();
         var h = new Class2();
         var j = new Day4();
-       
+
         //two.four_one();
         j.twofour_one();
-        
+
     }
 
     
